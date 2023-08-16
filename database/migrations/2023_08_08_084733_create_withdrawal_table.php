@@ -1,0 +1,35 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('withdrawal', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('program_id')->constrained('programs');
+            $table->bigInteger('manual_payment_amount')->nullable();
+            $table->bigInteger('automatic_payment_amount')->nullable();
+            $table->bigInteger('amount_total');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('withdrawal');
+    }
+};

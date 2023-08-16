@@ -1,0 +1,3 @@
+--- List Kebutuhan Sistem ---
+1. Akun gmail untuk proses/kirim verifikasi email ke user
+2. Akun Midtrans
