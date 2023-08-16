@@ -20,7 +20,8 @@ class UserTableSeeder extends Seeder
             'username' => 'superadmin',
             'email' => 'superadmin@gmail.com',
             'status' => 1,
-            'password' => bcrypt('superadmin')
+            'password' => bcrypt('superadmin'),
+            'email_verified_at' => now()
         ]);
         $admin1 = User::create([
             'name' => 'admin',

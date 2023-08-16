@@ -22,7 +22,7 @@ class HomeController extends Controller
         $program2 = Program::published()->with('category')->withCount('transactions_success')->inRandomOrder()->limit(3)->get();
         $program3 = Program::published()->with('category')->withCount('transactions_success')->inRandomOrder()->limit(3)->get();
 
-        $posts = Post::latest()->limit(6)->get();
+        $posts = Post::published()->latest()->limit(6)->get();
         $campaign_categories = ProgramCategory::with('programs')->inRandomOrder()->limit(4)->get();
         return view('frontend.pages.home', [
             'posts' => $posts,

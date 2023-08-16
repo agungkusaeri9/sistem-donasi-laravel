@@ -216,7 +216,7 @@ class ProgramController extends Controller
             return redirect()->route('admin.program.index')->with('success', 'Data Program berhasil ditambahkan.');
         } catch (\Throwable $th) {
             DB::rollback();
-            return redirect()->route('admin.program.index')->with('error', 'Data Gagal berhasil ditambahkan.');
+            return redirect()->route('admin.program.index')->with('error', $th->getMessage());
         }
     }
 

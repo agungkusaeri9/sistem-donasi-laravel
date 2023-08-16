@@ -79,8 +79,8 @@
                                         <div class="form-group">
                                             <label for="time_up">Masa Berlaku</label>
                                             <input type="date"
-                                                class="form-control @error('time_up') is-invalid @enderror"
-                                                name="time_up" value="{{ old('time_up') }}" id="time_up">
+                                                class="form-control @error('time_up') is-invalid @enderror" name="time_up"
+                                                value="{{ old('time_up') }}" id="time_up">
                                             @error('time_up')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -92,10 +92,10 @@
                                             <select name="status" id="status"
                                                 class="form-control @error('status') is-invalid @enderror">
                                                 <option value="" selected disabled>Pilih Status</option>
-                                                <option @if (old('status') == 1) selected @endif value="1">
-                                                    Aktif</option>
-                                                <option @if (old('status') === '0') selected @endif value="0">
-                                                    Tidak Aktif
+                                                <option @if (old('status') == 0) selected @endif value="1">
+                                                    Belum Selesai</option>
+                                                <option @if (old('status') == 1) selected @endif value="0">
+                                                    Sedang Berjalan
                                                 </option>
                                             </select>
                                             @error('status')
@@ -161,7 +161,8 @@
                                                     <input type="number" class="form-control" name="budget_nominal[]"
                                                         id="budget_nominal">
                                                 </div>
-                                                <div class="col-md-3
+                                                <div
+                                                    class="col-md-3
                                                         align-self-end">
                                                     <a href="javascript:void(0)" class="btn btn-lg btn-danger remove"><i
                                                             class="fas fa-minus"></i></a>
@@ -169,9 +170,9 @@
                                             </span>
                                         </div>
                                         @error('budget_name.*')
-                                                <div class="text-danger small">
-                                                    {{ $message }}
-                                                </div>
+                                            <div class="text-danger small">
+                                                {{ $message }}
+                                            </div>
                                         @enderror
                                     </div>
                                 </div>

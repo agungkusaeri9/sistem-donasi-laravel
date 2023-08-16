@@ -23,15 +23,15 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call(
             [
-            RoleTableSeeder::class,
-            UserTableSeeder::class,
-            PostCategoryTableSeeder::class,
-            PostTagTableSeeder::class,
-            // PostTableSeeder::class,
-            ProgramCategorySeeder::class,
-            SocmedTableSeeder::class,
-            SettingTableSeeder::class,
-            PermissionTableSeeder::class
+                RoleTableSeeder::class,
+                UserTableSeeder::class,
+                // PostCategoryTableSeeder::class,
+                // PostTagTableSeeder::class,
+                // PostTableSeeder::class,
+                // ProgramCategorySeeder::class,
+                SocmedTableSeeder::class,
+                SettingTableSeeder::class,
+                PermissionTableSeeder::class
             ]
         );
     }
