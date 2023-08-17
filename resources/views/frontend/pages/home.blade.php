@@ -23,8 +23,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 align-self-center">
-                                <div class="hero__img d-none d-lg-block f-right" data-animation="fadeInRight"
+                            <div class="col-lg-6 align-self-start">
+                                <div class="hero__img d-none d-lg-block f-left" data-animation="fadeInRight"
                                     data-delay="1s">
                                     <img src="{{ $slider->image() }}" alt="" class="img-fluid"
                                         style="max-height:220px">
@@ -47,7 +47,7 @@
             </div>
             <div class="row">
                 @forelse ($campaign_category->programs->take(3) as $program)
-                    <div class="col-md-4 col-6 mb-4">
+                    <div class="col-md-3 col-6 mb-4">
                         <a href="{{ route('campaign.show', $program->slug) }}" class="text-decoration-none text-dark">
                             <div class="card card-campaign border-0">
                                 <div class="card-body">
@@ -86,7 +86,7 @@
                 <h5>Berita Terbaru</h5>
             </div>
             @foreach ($posts as $post)
-                <div class="col-md-4 col-6 mb-4">
+                <div class="col-md-3 col-6 mb-4">
                     <a href="{{ route('artikel.show', $post->slug) }}" class="text-decoration-none text-dark">
                         <div class="card card-campaign border-0">
                             <div class="card-body">
