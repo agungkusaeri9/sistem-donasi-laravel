@@ -1,8 +1,8 @@
 <footer>
 
     <!-- Footer Start-->
-    <div class="footer-main bg-dark">
-        <div class="footer-area footer-padding">
+    <div class="footer-main bg-dark py-5">
+        <div class="footer-area">
             <div class="container">
                 <div class="row justify-content-between">
                     <div class="col-lg-3 col-md-4 col-sm-8">
@@ -90,7 +90,7 @@
                 <!-- Copy-Right -->
                 <div class="row align-items-center">
                     <div class="col-xl-12 ">
-                        <div class="footer-copy-right">
+                        <div class="text-center mt-3">
                             <p>
                                 Copyright &copy;
                                 <script>

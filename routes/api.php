@@ -20,7 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-Route::resource('posts', PostController::class);
 Route::post('/transaction-handling', [TransactionController::class, 'transactionHandling'])->name('transaction-handling');
-Route::post('/transactions/check',[TransactionController::class,'check']);
+Route::post('/transactions/check', [TransactionController::class, 'check']);

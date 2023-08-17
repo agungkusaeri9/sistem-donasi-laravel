@@ -30,7 +30,8 @@
                         @forelse ($posts as $post)
                             <article class="blog_item">
                                 <div class="blog_item_img">
-                                    <img class="card-img rounded-0" src="{{ $post->image }}" alt="">
+                                    <img class="card-img rounded-0" src="{{ $post->image }}" alt=""
+                                        style="max-height: 400px">
                                     <a href="#" class="blog_item_date">
                                         <h3>{{ $post->created_at->translatedFormat('d') }}</h3>
                                         <p>{{ $post->created_at->translatedFormat('M') }}</p>

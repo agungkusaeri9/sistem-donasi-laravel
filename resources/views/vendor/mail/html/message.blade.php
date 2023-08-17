@@ -22,7 +22,7 @@
     <x-slot:footer>
         <x-mail::footer>
             @php
-                $setting = use App\Models\Setting;
+                $setting = App\Models\Setting::class;
             @endphp
             © {{ date('Y') }} {{ config('app.name') }}. @lang('All rights reserved.')
         </x-mail::footer>

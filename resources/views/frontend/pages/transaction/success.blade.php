@@ -110,14 +110,13 @@
                                 </div>
                             </div>
                             <hr>
-                            <div class="row">
+                            <div class="row mb-3">
                                 <div class="col-12">
                                     @auth
-                                        <a href="{{ route('transaction.index') }}" class="btn btn-primary py-4"><i
+                                        <a href="{{ route('transaction.index') }}" class="btn btn-warning"><i
                                                 class="fas fa-arrow-left"></i> Kembali</a>
                                     @else
-                                        <a href="{{ route('home') }}" class="btn btn-primary py-4"><i
-                                                class="fas fa-arrow-left"></i>
+                                        <a href="{{ route('home') }}" class="btn btn-warning"><i class="fas fa-arrow-left"></i>
                                             Kembali</a>
                                     @endauth
                                     @if ($item->type !== 'manual')
@@ -125,7 +124,8 @@
                                             <a href="javascript:void(0)" id="pay-button"
                                                 data-transaction_id="{{ $item->id }}"
                                                 data-snaptoken="{{ $item->details->snap_token ?? '' }}"
-                                                class="btn btn-primary">Bayar Sekarang</a>
+                                                class="btn btn-primary">
+                                                <i class="fas fa-credit-card"></i> Bayar Sekarang</a>
                                         @endif
                                     @endif
                                 </div>

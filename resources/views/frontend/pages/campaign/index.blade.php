@@ -48,7 +48,7 @@
             </div>
             <div class="row">
                 @forelse ($items as $item)
-                    <div class="col-md-4 col-6 mb-4">
+                    <div class="col-md-3 col-6 mb-4">
                         <a href="{{ route('campaign.show', $item->slug) }}" class="text-decoration-none text-dark">
                             <div class="card card-campaign border-0">
                                 <div class="card-body">

@@ -16,21 +16,14 @@ class HomeController extends Controller
     {
         $title = 'Selamat Datang di website resmi kami';
         $sliders = Slider::get();
-        $program1 = Program::published()->with('category')->withCount('transactions_success')->whereHas('category', function ($query) {
-            return $query->where('name', 'Donasi Pasien');
-        })->limit(3)->latest()->get();
-        $program2 = Program::published()->with('category')->withCount('transactions_success')->inRandomOrder()->limit(3)->get();
-        $program3 = Program::published()->with('category')->withCount('transactions_success')->inRandomOrder()->limit(3)->get();
-
         $posts = Post::published()->latest()->limit(6)->get();
-        $campaign_categories = ProgramCategory::with('programs')->inRandomOrder()->limit(4)->get();
+        $campaign_categories = ProgramCategory::with(['programs' => function ($query) {
+            $query->published();
+        }])->inRandomOrder()->limit(4)->get();
         return view('frontend.pages.home', [
             'posts' => $posts,
             'title' => $title,
             'sliders' => $sliders,
-            'program1' => $program1,
-            'program2' => $program2,
-            'program3' => $program3,
             'campaign_categories' => $campaign_categories
         ]);
     }

@@ -21,7 +21,7 @@
                 <div class="col-lg-8 posts-list">
                     <div class="single-post">
                         <div class="feature-img">
-                            <img class="img-fluid" src="{{ $post->image }}" alt="">
+                            <img class="img-fluid" src="{{ $post->image }}" alt="" style="max-height: 400px">
                         </div>
                         <div class="blog_details">
                             <h2>{{ $post->title }}
