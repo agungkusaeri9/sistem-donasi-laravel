@@ -1,6 +1,6 @@
 @extends('auth.app')
 @section('title')
-    Register - pelayanan Inkubator
+    Register | Donasiinaja
 @endsection
 @section('content')
     <section class="section">
@@ -9,8 +9,8 @@
                 <div class="col-md-5">
                     <div class="login-brand">
                         <a href="{{ route('home') }}">
-                            <img src="{{ $setting->image() }}" alt="logo" width="100"
-                                class="shadow-light rounded-circle">
+                            <img src="{{ $setting->image() }}" alt="logo" class="img-fluid shadow-light rounded-circle"
+                                style="max-height: 160px">
                         </a>
                     </div>
 

@@ -7,7 +7,7 @@
                 <div class="single-slider slider-height slider-padding sky-blue d-flex align-items-center">
                     <div class="container">
                         <div class="row d-flex align-items-center">
-                            <div class="col-lg-6 col-md-9 ">
+                            <div class="col-lg-6 col-md-9">
                                 <div class="hero__caption">
                                     <span data-animation="fadeInUp" data-delay=".4s"></span>
                                     <h1 data-animation="fadeInUp" data-delay=".6s" style="font-size:32px">
@@ -23,11 +23,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 align-self-start">
-                                <div class="hero__img d-none d-lg-block f-left" data-animation="fadeInRight"
+                            <div class="col-lg-6 text-right">
+                                <div class="hero__img d-none d-lg-block f-right" data-animation="fadeInRight"
                                     data-delay="1s">
                                     <img src="{{ $slider->image() }}" alt="" class="img-fluid"
-                                        style="max-height:220px">
+                                        style="max-height:220px;margin-right:60px">
                                 </div>
                             </div>
                         </div>
