@@ -4,7 +4,8 @@
     <div class="slider-area ">
         <div class="slider-active">
             @foreach ($sliders as $slider)
-                <div class="single-slider slider-height slider-padding sky-blue d-flex align-items-center">
+                <div class="single-slider slider-height slider-padding sky-blue d-flex align-items-center"
+                    style="min-height: 500px !important">
                     <div class="container">
                         <div class="row d-flex align-items-center">
                             <div class="col-lg-6 col-md-9">
