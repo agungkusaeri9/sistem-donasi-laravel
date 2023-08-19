@@ -9,8 +9,8 @@
                 <div class="col-md-5">
                     <div class="login-brand">
                         <a href="{{ route('home') }}">
-                            <img src="{{ $setting->image() }}" alt="logo" class="img-fluid shadow-light rounded-circle"
-                                style="max-height: 160px">
+                            <img src="{{ $setting->image() }}" alt="logo" class="img-fluid shadow-light"
+                                style="max-height: 140px">
                         </a>
                     </div>
 

@@ -7,8 +7,7 @@
                 <div class="col-md-5 align-self-center" style="padding-right: 80px;padding-left: 80px">
                     <div class="login-brand text-center mb-5">
                         <a href="{{ route('home') }}">
-                            <img src="{{ $setting->image() }}" alt="logo" width="100"
-                                class="shadow-light rounded-circle">
+                            <img src="{{ $setting->image() }}" alt="logo" width="100" class="shadow-light">
                         </a>
                     </div>
 

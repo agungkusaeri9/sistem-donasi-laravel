@@ -18,7 +18,7 @@ class HomeController extends Controller
         $sliders = Slider::get();
         $posts = Post::published()->latest()->limit(6)->get();
         $campaign_categories = ProgramCategory::with(['programs' => function ($query) {
-            $query->published();
+            $query->withCount('transactions_success')->published();
         }])->inRandomOrder()->limit(4)->get();
         return view('frontend.pages.home', [
             'posts' => $posts,

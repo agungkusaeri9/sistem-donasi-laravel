@@ -110,12 +110,12 @@
                     <a href="#" class="nav-link has-dropdown"><i class="fas fa-fw fa-database"></i>
                         <span>Manajemen User</span></a>
                     <ul class="dropdown-menu">
-                        @can('Role View')
+                        {{-- @can('Role View')
                             <li><a href="{{ route('admin.roles.index') }}">Role</a></li>
                         @endcan
                         @can('Permission View')
                             <li><a href="{{ route('admin.permissions.index') }}">Hak Akses</a></li>
-                        @endcan
+                        @endcan --}}
                         @can('User View')
                             <li><a href="{{ route('admin.users.index') }}">User</a></li>
                         @endcan

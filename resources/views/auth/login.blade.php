@@ -7,8 +7,8 @@
                 <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
                     <div class="login-brand">
                         <a href="{{ route('home') }}">
-                            <img src="{{ $setting->image() }}" alt="logo" class="img-fluid shadow-light rounded-circle"
-                                style="max-height: 160px">
+                            <img src="{{ $setting->image() }}" alt="logo" class="img-fluid shadow-light"
+                                style="max-height: 140px">
                         </a>
                     </div>
 
