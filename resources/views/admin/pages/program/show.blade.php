@@ -37,7 +37,7 @@
                                 <hr>
                                 <li class="list-item d-flex justify-content-between">
                                     <span class="font-weight-bold">Donasi Terkumpul</span>
-                                    <span class="ml-5 text-right">Rp. {{ $item->donation_collacted ?? '0' }}</span>
+                                    <span class="ml-5 text-right">Rp. {{ $item->donation_collacted() ?? '0' }}</span>
                                 </li>
                                 <hr>
                                 <li class="list-item d-flex justify-content-between">

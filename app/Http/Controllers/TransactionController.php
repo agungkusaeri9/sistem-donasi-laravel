@@ -31,6 +31,12 @@ class TransactionController extends Controller
     public function payment($slug)
     {
         $item = Program::where('slug', $slug)->first();
+        $target_donasi = $item->donation_target;
+        $terkumpul = $item->transactions_success->sum('nominal');
+
+        if ($terkumpul >= $target_donasi) {
+            return redirect()->back()->with('error', 'Donasi sudah melebihi target.');
+        }
         $payments = Payments::orderBy('name', 'ASC')->get();
         return view('frontend.pages.transaction.payment', [
             'title' => 'Pilih Metode Pembayaran',

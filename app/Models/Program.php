@@ -105,4 +105,9 @@ class Program extends Model
             'status' => 2
         ]);
     }
+
+    public function donation_collacted()
+    {
+        return $this->transactions_success->sum('nominal');
+    }
 }
