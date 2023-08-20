@@ -28,35 +28,33 @@ class PostCategoryController extends Controller
      */
     public function index()
     {
-        return view('admin.pages.post-category.index',[
+        return view('admin.pages.post-category.index', [
             'title' => 'Data Kategori Artikel'
         ]);
     }
 
     public function data()
     {
-        if(request()->ajax())
-        {
+        if (request()->ajax()) {
             $data = PostCategory::query();
             return DataTables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('action',function($model){
-                       if(auth()->user()->getRoleNames()->first() === 'Super Admin' ||auth()->user()->getPermissions('Post Category Edit')){
+                ->addIndexColumn()
+                ->addColumn('action', function ($model) {
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Post Category Edit')) {
                         $act_edit = "<button class='btn btn-sm btn-info btnEdit mx-1' data-id='$model->id' data-name='$model->name'><i class='fas fa fa-edit'></i> Edit</button>";
-                       }else{
+                    } else {
                         $act_edit = "";
-                       }
+                    }
 
-                        if(auth()->user()->getRoleNames()->first() === 'Super Admin' ||auth()->user()->getPermissions('Post Category Delete'))
-                        {
-                            $act_delete = "<button class='btn btn-sm btn-danger btnDelete mx-1' data-id='$model->id' data-name='$model->name'><i class='fas fa fa-trash'></i> Hapus</button>";
-                        }else{
-                            $act_delete = "";
-                        }
-                        return $act_edit . $act_delete;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Post Category Delete')) {
+                        $act_delete = "<button class='btn btn-sm btn-danger btnDelete mx-1' data-id='$model->id' data-name='$model->name'><i class='fas fa fa-trash'></i> Hapus</button>";
+                    } else {
+                        $act_delete = "";
+                    }
+                    return $act_edit . $act_delete;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
     }
 
@@ -69,23 +67,22 @@ class PostCategoryController extends Controller
     public function store(Request $request)
     {
         request()->validate([
-            'name' => ['required',Rule::unique('post_categories')->ignore(request('id'))]
+            'name' => ['required', Rule::unique('post_categories')->ignore(request('id'))]
         ]);
 
         PostCategory::updateOrCreate([
             'id'  => request('id')
-        ],[
+        ], [
             'name' => request('name'),
             'slug' => Str::slug(request('name'))
         ]);
 
-        if(request('id'))
-        {
+        if (request('id')) {
             $message = 'Kategori berhasil disimpan.';
-        }else{
+        } else {
             $message = 'Kategori berhasil ditambahakan.';
         }
-        return response()->json(['status'=>'succcess','message' => $message]);
+        return response()->json(['status' => 'succcess', 'message' => $message]);
     }
 
     /**
@@ -97,6 +94,6 @@ class PostCategoryController extends Controller
     public function destroy($id)
     {
         PostCategory::find($id)->delete();
-        return response()->json(['status'=>'succcess','message' => 'Data kategori berhasil dihapus.']);
+        return response()->json(['status' => 'succcess', 'message' => 'Data kategori berhasil dihapus.']);
     }
 }

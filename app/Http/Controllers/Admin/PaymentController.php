@@ -28,38 +28,35 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        
-        return view('admin.pages.payments.index',[
+
+        return view('admin.pages.payments.index', [
             'title' => 'Data Pembayaran'
         ]);
     }
 
     public function data()
     {
-        if(request()->ajax())
-        {
+        if (request()->ajax()) {
             $data = Payments::query();
             return DataTables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('action',function($model){
-                        if(auth()->user()->getRoleNames()->first() === 'Super Admin' || auth()->user()->getPermissions('Payment Edit'))
-                        {
-                            $edit = "<button class='btn btn-sm btn-info btnEdit mx-1' data-id='$model->id' data-name='$model->name' data-number='$model->number' data-description='$model->description'><i class='fas fa fa-edit'></i> Edit</button>";
-                        }else{
-                            $edit = "";
-                        }
-                        if(auth()->user()->getRoleNames()->first() === 'Super Admin' || auth()->user()->getPermissions('Payment Delete'))
-                        {
-                            $delete = "<button class='btn btn-sm btn-danger btnDelete mx-1' data-id='$model->id' data-name='$model->name'><i class='fas fa fa-trash'></i> Hapus</button>";
-                        }else{
-                            $delete = "";
-                        }
+                ->addIndexColumn()
+                ->addColumn('action', function ($model) {
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Payment Edit')) {
+                        $edit = "<button class='btn btn-sm btn-info btnEdit mx-1' data-id='$model->id' data-name='$model->name' data-number='$model->number' data-description='$model->description'><i class='fas fa fa-edit'></i> Edit</button>";
+                    } else {
+                        $edit = "";
+                    }
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Payment Delete')) {
+                        $delete = "<button class='btn btn-sm btn-danger btnDelete mx-1' data-id='$model->id' data-name='$model->name'><i class='fas fa fa-trash'></i> Hapus</button>";
+                    } else {
+                        $delete = "";
+                    }
 
-                        $action = $edit . $delete;
-                        return $action;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+                    $action = $edit . $delete;
+                    return $action;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
     }
 
@@ -89,19 +86,18 @@ class PaymentController extends Controller
 
         Payments::updateOrCreate([
             'id'  => request('id')
-        ],[
+        ], [
             'name' => request('name'),
             'number' => request('number'),
             'description' => request('description')
         ]);
 
-        if(request('id'))
-        {
+        if (request('id')) {
             $message = 'Metode Pembayaran berhasil disimpan.';
-        }else{
+        } else {
             $message = 'Metode Pembayaran berhasil ditambahakan.';
         }
-        return response()->json(['status'=>'succcess','message' => $message]);
+        return response()->json(['status' => 'succcess', 'message' => $message]);
     }
 
     /**
@@ -147,6 +143,6 @@ class PaymentController extends Controller
     public function destroy($id)
     {
         Payments::find($id)->delete();
-        return response()->json(['status'=>'succcess','message' => 'Metode Pembayaran berhasil dihapus.']);
+        return response()->json(['status' => 'succcess', 'message' => 'Metode Pembayaran berhasil dihapus.']);
     }
 }

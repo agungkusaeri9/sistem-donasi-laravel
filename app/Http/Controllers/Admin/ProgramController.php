@@ -61,19 +61,19 @@ class ProgramController extends Controller
 
                     $route = route('admin.program.edit', $model->id);
                     $routeDetail = route('admin.program.show', $model->id);
-                    if (auth()->user()->getRoleNames()->first() === 'Super Admin' || auth()->user()->getPermissions('Program Detail')) {
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Program Detail')) {
                         $detail = "<a href='$routeDetail' class='btn btn-sm btn-warning btnDetail mx-1' data-id='$model->id' data-title='$model->title'><i class='fas fa fa-eye'></i> Detail</a>";
                     } else {
                         $detail = "";
                     }
 
-                    if (auth()->user()->getRoleNames()->first() === 'Super Admin' || auth()->user()->getPermissions('Program Edit')) {
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Program Edit')) {
                         $edit = "<a href='$route' class='btn btn-sm btn-info btnEdit mx-1' data-id='$model->id' data-title='$model->title'><i class='fas fa fa-edit'></i> Edit</a>";
                     } else {
                         $edit = "";
                     }
 
-                    if (auth()->user()->getRoleNames()->first() === 'Super Admin' || auth()->user()->getPermissions('Program Delete')) {
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Program Delete')) {
                         $delete = "<button class='btn btn-sm btn-danger btnDelete mx-1' data-id='$model->id' data-title='$model->title'><i class='fas fa fa-trash'></i> Hapus</button>";
                     } else {
                         $delete = "";
@@ -82,7 +82,7 @@ class ProgramController extends Controller
                     return $action;
                 })
                 ->editColumn('publish', function ($model) {
-                    if (auth()->user()->getRoleNames()->first() === 'Super Admin' || auth()->user()->getPermissions('Program Change Status')) {
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Program Change Status')) {
                         if ($model->is_published == 1) {
                             $is_published = '<div class="custom-control custom-switch">
                                     <input type="checkbox" value=' . $model->is_published . ' class="custom-control-input btnIsPublished" checked id=' . $model->id . ' data-id="' . $model->id . '">
@@ -382,13 +382,13 @@ class ProgramController extends Controller
                     return $model->user->name ?? '-';
                 })
                 ->addColumn('action', function ($model) {
-                    if (auth()->user()->getRoleNames()->first() === 'Super Admin' || auth()->user()->getPermissions('Trash Restore')) {
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Trash Restore')) {
                         $restore = "<button class='btn btn-sm btn-info btnRestore d-inline mx-1' data-id='$model->id' data-title='$model->title'><i class='fas fa fa-trash'></i> Restore</button>";
                     } else {
                         $restore = "";
                     }
 
-                    if (auth()->user()->getRoleNames()->first() === 'Super Admin' || auth()->user()->getPermissions('Trash Delete Permanent')) {
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Trash Delete Permanent')) {
                         $delete = "<button class='btn btn-sm btn-danger btnDelete d-inline mx-1' data-id='$model->id' data-title='$model->code'><i class='fas fa fa-trash'></i> Hapus Permanen</button>";
                     } else {
                         $delete = "";

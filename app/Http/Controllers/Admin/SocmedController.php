@@ -40,12 +40,12 @@ class SocmedController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($model) {
-                    if (auth()->user()->getRoleNames()->first() === 'Super Admin' || auth()->user()->getPermissions('Social Media Edit')) {
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Social Media Edit')) {
                         $edit = "<button class='btn btn-sm btn-info btnEdit mx-1' data-id='$model->id' data-name='$model->name'  data-link='$model->link'><i class='fas fa fa-edit'></i> Edit</button>";
                     } else {
                         $edit = "";
                     }
-                    if (auth()->user()->getRoleNames()->first() === 'Super Admin' || auth()->user()->getPermissions('Social Media Delete')) {
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Social Media Delete')) {
                         $delete = "<button class='btn btn-sm btn-danger btnDelete mx-1' data-id='$model->id' data-name='$model->name'><i class='fas fa fa-trash'></i> Hapus</button>";
                     } else {
                         $delete = "";

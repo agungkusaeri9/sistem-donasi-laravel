@@ -46,13 +46,13 @@ class TransactionController extends Controller
                     return 'Rp. ' . number_format($model->nominal);
                 })
                 ->addColumn('action', function ($model) {
-                    if (auth()->user()->getRoleNames()->first() === 'Super Admin' || auth()->user()->getPermissions('Transaction Detail')) {
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Transaction Detail')) {
                         $detail = "<button class='btn btn-sm btn-warning btnDetail mx-1' data-id='$model->id' data-title='$model->name'><i class='fas fa fa-eye'></i> Detail</button>";
                     } else {
                         $detail = "";
                     }
 
-                    if (auth()->user()->getRoleNames()->first() === 'Super Admin' || auth()->user()->getPermissions('Transaction Delete')) {
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Transaction Delete')) {
                         $delete = "<button class='btn btn-sm btn-danger btnDelete mx-1' data-id='$model->id' data-title='$model->name'><i class='fas fa fa-trash'></i> Hapus</button>";
                     } else {
                         $delete = "";
@@ -61,7 +61,7 @@ class TransactionController extends Controller
                     return $action;
                 })
                 ->addColumn('verification', function ($model) {
-                    if (auth()->user()->getRoleNames()->first() === 'Super Admin' || auth()->user()->getPermissions('Transaction Change Status')) {
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Transaction Change Status')) {
 
                         if ($model->is_verified == 1) {
                             if ($model->type === 'otomatis') {
@@ -246,13 +246,13 @@ class TransactionController extends Controller
                     return $model->program->name ?? '-';
                 })
                 ->addColumn('action', function ($model) {
-                    if (auth()->user()->getRoleNames()->first() === 'Super Admin' || auth()->user()->getPermissions('Trash Restore')) {
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Trash Restore')) {
                         $restore = "<button class='btn btn-sm btn-info btnRestore d-inline mx-1' data-id='$model->id' data-title='$model->code'><i class='fas fa fa-trash'></i> Restore</button>";
                     } else {
                         $restore = "";
                     }
 
-                    if (auth()->user()->getRoleNames()->first() === 'Super Admin' || auth()->user()->getPermissions('Trash Delete Permanent')) {
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Trash Delete Permanent')) {
                         $delete = "<button class='btn btn-sm btn-danger btnDelete d-inline mx-1' data-id='$model->id' data-title='$model->code'><i class='fas fa fa-trash'></i> Hapus Permanen</button>";
                     } else {
                         $delete = "";

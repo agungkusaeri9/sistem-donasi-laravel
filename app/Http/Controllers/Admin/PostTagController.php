@@ -21,38 +21,35 @@ class PostTagController extends Controller
     }
     public function index()
     {
-        return view('admin.pages.post-tag.index',[
+        return view('admin.pages.post-tag.index', [
             'title' => 'Data Tag'
         ]);
     }
 
     public function data()
     {
-        if(request()->ajax())
-        {
+        if (request()->ajax()) {
             $data = PostTag::query();
             return DataTables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('action',function($model){
-                       if(auth()->user()->getRoleNames()->first() === 'Super Admin' ||auth()->user()->getPermissions('Post Tag Edit'))
-                       {
+                ->addIndexColumn()
+                ->addColumn('action', function ($model) {
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Post Tag Edit')) {
                         $edit = "<button class='btn btn-sm btn-info btnEdit mx-1' data-id='$model->id' data-name='$model->name'><i class='fas fa fa-edit'></i> Edit</button>";
-                       }else{
+                    } else {
                         $edit = "";
-                       }
+                    }
 
-                       if(auth()->user()->getRoleNames()->first() === 'Super Admin' ||auth()->user()->getPermissions('Post Tag Delete'))
-                       {
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Post Tag Delete')) {
                         $delete = "<button class='btn btn-sm btn-danger btnDelete mx-1' data-id='$model->id' data-name='$model->name'><i class='fas fa fa-trash'></i> Hapus</button>";
-                       }else{
+                    } else {
                         $delete = "";
-                       }
+                    }
 
-                        $action = $edit . $delete;
-                        return $action;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+                    $action = $edit . $delete;
+                    return $action;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
     }
 
@@ -65,23 +62,22 @@ class PostTagController extends Controller
     public function store(Request $request)
     {
         request()->validate([
-            'name' => ['required',Rule::unique('post_tags','name')->ignore(request('id'))]
+            'name' => ['required', Rule::unique('post_tags', 'name')->ignore(request('id'))]
         ]);
 
         PostTag::updateOrCreate([
             'id'  => request('id')
-        ],[
+        ], [
             'name' => request('name'),
             'slug' => Str::slug(request('name'))
         ]);
 
-        if(request('id'))
-        {
+        if (request('id')) {
             $message = 'Tag berhasil disimpan.';
-        }else{
+        } else {
             $message = 'Tag berhasil ditambahakan.';
         }
-        return response()->json(['status'=>'succcess','message' => $message]);
+        return response()->json(['status' => 'succcess', 'message' => $message]);
     }
 
     /**
@@ -93,6 +89,6 @@ class PostTagController extends Controller
     public function destroy($id)
     {
         PostTag::find($id)->delete();
-        return response()->json(['status'=>'succcess','message' => 'Data Tag berhasil dihapus.']);
+        return response()->json(['status' => 'succcess', 'message' => 'Data Tag berhasil dihapus.']);
     }
 }

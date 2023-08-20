@@ -27,62 +27,60 @@ class ProgramCategoryController extends Controller
      */
     public function index()
     {
-        return view('admin.pages.program-category.index',[
+        return view('admin.pages.program-category.index', [
             'title' => 'Data Kategori Program'
         ]);
     }
 
     public function data()
     {
-        if(request()->ajax())
-        {
+        if (request()->ajax()) {
             $data = ProgramCategory::query();
             return DataTables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('action',function($model){
-                        if(auth()->user()->getRoleNames()->first() === 'Super Admin' ||auth()->user()->getPermissions('Program Category Edit')){
-                            $edit = "<button class='btn btn-sm btn-info btnEdit mx-1' data-id='$model->id' data-name='$model->name'><i class='fas fa fa-edit'></i> Edit</button>";
-                        }else{
-                            $edit = "";
-                        }
-                        if(auth()->user()->getRoleNames()->first() === 'Super Admin' ||auth()->user()->getPermissions('Program Category Delete')){
-                            $delete = "<button class='btn btn-sm btn-danger btnDelete mx-1' data-id='$model->id' data-name='$model->name'><i class='fas fa fa-trash'></i> Hapus</button>";
-                        }else{
-                            $delete = "";
-                        }
-                        $action = $edit . $delete;
-                        return $action;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+                ->addIndexColumn()
+                ->addColumn('action', function ($model) {
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Program Category Edit')) {
+                        $edit = "<button class='btn btn-sm btn-info btnEdit mx-1' data-id='$model->id' data-name='$model->name'><i class='fas fa fa-edit'></i> Edit</button>";
+                    } else {
+                        $edit = "";
+                    }
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Program Category Delete')) {
+                        $delete = "<button class='btn btn-sm btn-danger btnDelete mx-1' data-id='$model->id' data-name='$model->name'><i class='fas fa fa-trash'></i> Hapus</button>";
+                    } else {
+                        $delete = "";
+                    }
+                    $action = $edit . $delete;
+                    return $action;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
     }
 
     public function store(Request $request)
     {
         request()->validate([
-            'name' => ['required',Rule::unique('program_categories')->ignore(request('id'))]
+            'name' => ['required', Rule::unique('program_categories')->ignore(request('id'))]
         ]);
 
         ProgramCategory::updateOrCreate([
             'id'  => request('id')
-        ],[
+        ], [
             'name' => request('name'),
             'slug' => Str::slug(request('name'))
         ]);
 
-        if(request('id'))
-        {
+        if (request('id')) {
             $message = 'Kategori berhasil disimpan.';
-        }else{
+        } else {
             $message = 'Kategori berhasil ditambahakan.';
         }
-        return response()->json(['status'=>'succcess','message' => $message]);
+        return response()->json(['status' => 'succcess', 'message' => $message]);
     }
 
     public function destroy($id)
     {
         ProgramCategory::find($id)->delete();
-        return response()->json(['status'=>'succcess','message' => 'Data kategori berhasil dihapus.']);
+        return response()->json(['status' => 'succcess', 'message' => 'Data kategori berhasil dihapus.']);
     }
 }

@@ -97,14 +97,13 @@ class UserController extends Controller
                     'password_confirmation' => ['required'],
                 ]);
                 $password = bcrypt(request('password'));
-            }else{
+            } else {
                 $password = $item->password;
             }
             if (request()->file('avatar')) {
-               if($item->avatar)
-               {
-                Storage::disk('public')->delete($item->avatar);
-               }
+                if ($item->avatar) {
+                    Storage::disk('public')->delete($item->avatar);
+                }
                 $avatar = request()->file('avatar')->store('users', 'public');
             } else {
                 $avatar = $item->avatar;
@@ -232,37 +231,36 @@ class UserController extends Controller
 
     public function trash()
     {
-        if(request()->ajax())
-        {
+        if (request()->ajax()) {
             $data = User::onlyTrashed()->latest();
             return FacadesDataTables::eloquent($data)
-                    ->addIndexColumn()
-                    ->addColumn('action',function($model){
-                        if (auth()->user()->getRoleNames()->first() === 'Super Admin' || auth()->user()->getPermissions('Trash Restore')) {
-                            $restore = "<button class='btn btn-sm btn-info btnRestore d-inline mx-1' data-id='$model->id' data-title='$model->title'><i class='fas fa fa-trash'></i> Restore</button>";
-                        }else{
-                            $restore = "";
-                        }
+                ->addIndexColumn()
+                ->addColumn('action', function ($model) {
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Trash Restore')) {
+                        $restore = "<button class='btn btn-sm btn-info btnRestore d-inline mx-1' data-id='$model->id' data-title='$model->title'><i class='fas fa fa-trash'></i> Restore</button>";
+                    } else {
+                        $restore = "";
+                    }
 
-                        if (auth()->user()->getRoleNames()->first() === 'Super Admin' || auth()->user()->getPermissions('Trash Delete Permanent')) {
-                            $delete = "<button class='btn btn-sm btn-danger btnDelete d-inline mx-1' data-id='$model->id' data-title='$model->code'><i class='fas fa fa-trash'></i> Hapus Permanen</button>";
-                        }else{
-                            $delete = "";
-                        }
-                        $action = $restore . $delete;
-                        return $action;
-                    })
-                    ->addColumn('created', function($model){
-                        return $model->created_at->translatedFormat('d F Y');
-                    })
-                    ->addColumn('role', function($model){
-                        return $model->getRoleNames()->first();
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Trash Delete Permanent')) {
+                        $delete = "<button class='btn btn-sm btn-danger btnDelete d-inline mx-1' data-id='$model->id' data-title='$model->code'><i class='fas fa fa-trash'></i> Hapus Permanen</button>";
+                    } else {
+                        $delete = "";
+                    }
+                    $action = $restore . $delete;
+                    return $action;
+                })
+                ->addColumn('created', function ($model) {
+                    return $model->created_at->translatedFormat('d F Y');
+                })
+                ->addColumn('role', function ($model) {
+                    return $model->getRoleNames()->first();
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
 
-        return view('admin.pages.user.trash',[
+        return view('admin.pages.user.trash', [
             'title' => 'Keranjang Sampah User'
         ]);
     }
@@ -270,16 +268,16 @@ class UserController extends Controller
     public function deletePermanent($id)
     {
         $item = User::onlyTrashed()->find($id);
-        if($item->avatar)
+        if ($item->avatar)
             Storage::disk('public')->delete($item->avatar);
         $item->forceDelete();
-        return response()->json(['status'=>'succcess','message' => 'User berhasil dihapus secara permanen.']);
+        return response()->json(['status' => 'succcess', 'message' => 'User berhasil dihapus secara permanen.']);
     }
 
     public function restore($id)
     {
         $item = User::onlyTrashed()->find($id);
         $item->restore();
-        return response()->json(['status'=>'succcess','message' => 'User berhasil dipulihkan dari keranjang sampah.']);
+        return response()->json(['status' => 'succcess', 'message' => 'User berhasil dipulihkan dari keranjang sampah.']);
     }
 }

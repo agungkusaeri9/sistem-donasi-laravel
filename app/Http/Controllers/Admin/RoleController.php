@@ -41,20 +41,20 @@ class RoleController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($model) {
-                    if(auth()->user()->getRoleNames()->first() === 'Super Admin' ||auth()->user()->getPermissions('Role Permission')){
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Role Permission')) {
                         $permission = "<button class='btn btn-sm btn-warning btnPermission mx-1' data-id='$model->id' data-name='$model->name'><i class='fas fa fa-eye'></i> Hak Akses</button>";
-                    }else{
+                    } else {
                         $permission = "";
                     }
-                    if(auth()->user()->getRoleNames()->first() === 'Super Admin' ||auth()->user()->getPermissions('Role Edit')){
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Role Edit')) {
                         $edit = "<button class='btn btn-sm btn-info btnEdit mx-1' data-id='$model->id' data-name='$model->name'><i class='fas fa fa-edit'></i> Edit</button>";
-                    }else{
+                    } else {
                         $edit = "";
                     }
 
-                    if(auth()->user()->getRoleNames()->first() === 'Super Admin' ||auth()->user()->getPermissions('Role Delete')){
+                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Role Delete')) {
                         $delete = "<button class='btn btn-sm btn-danger btnDelete mx-1' data-id='$model->id' data-name='$model->name'><i class='fas fa fa-trash'></i> Hapus</button>";
-                    }else{
+                    } else {
                         $delete = "";
                     }
 
