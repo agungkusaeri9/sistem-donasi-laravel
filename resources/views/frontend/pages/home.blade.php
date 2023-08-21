@@ -66,7 +66,13 @@
                                     <span class="nominal">Rp. {{ number_format($program->donation_target) }}</span>
                                     <div class="d-flex justify-content-between">
                                         <span class="small">{{ $program->transactions_success_count }} Donatur</span>
-                                        <span class="small">{{ $program->count_day() }} Hari Lagi</span>
+                                        <span class="small">
+                                            @if ($item->count_day() < 1)
+                                                Waktu Habis
+                                            @else
+                                                {{ $item->count_day() }} Hari Lagi
+                                            @endif
+                                        </span>
                                     </div>
                                 </div>
                             </div>
