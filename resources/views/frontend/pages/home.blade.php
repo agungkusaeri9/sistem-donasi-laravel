@@ -67,10 +67,10 @@
                                     <div class="d-flex justify-content-between">
                                         <span class="small">{{ $program->transactions_success_count }} Donatur</span>
                                         <span class="small">
-                                            @if ($item->count_day() < 1)
+                                            @if ($program->count_day() < 1)
                                                 Waktu Habis
                                             @else
-                                                {{ $item->count_day() }} Hari Lagi
+                                                {{ $program->count_day() }} Hari Lagi
                                             @endif
                                         </span>
                                     </div>
