@@ -108,7 +108,13 @@
                         </div>
                         <div class="d-flex justify-content-between">
                             <span class="small">{{ $item->transactions_success_count }} Donatur</span>
-                            <span class="small">{{ $item->count_day() }} Hari Lagi</span>
+                            <span class="small">
+                                @if ($item->count_day() > 0)
+                                    {{ $item->count_day() }} Hari Lagi
+                                @else
+                                    Waktu Habis
+                                @endif
+                            </span>
                         </div>
                         <div class="progress my-3">
                             <div class="progress-bar" style="width: {{ $item->percent() }}%" role="progressbar"

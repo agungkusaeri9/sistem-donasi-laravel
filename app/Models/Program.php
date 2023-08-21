@@ -56,7 +56,10 @@ class Program extends Model
     {
         if ($this->time_up) {
             $now = Carbon::now();
-            return $this->time_up->diffInDays($now);
+            if ($now > $this->time_up)
+                return '-' . $this->time_up->diffInDays($now) + 1;
+            else
+                return $this->time_up->diffInDays($now) + 1;
         } else {
             return "0";
         }

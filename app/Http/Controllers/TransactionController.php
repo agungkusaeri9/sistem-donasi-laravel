@@ -34,8 +34,8 @@ class TransactionController extends Controller
         $target_donasi = $item->donation_target;
         $terkumpul = $item->transactions_success->sum('nominal');
 
-        if ($terkumpul >= $target_donasi) {
-            return redirect()->back()->with('error', 'Donasi sudah melebihi target.');
+        if ($terkumpul >= $target_donasi || $item->count_day() < 1) {
+            return redirect()->route('campaign.show', $item->slug)->with('error', 'Donasi sudah melebihi target atau waktu donasi sudah habis.');
         }
         $payments = Payments::orderBy('name', 'ASC')->get();
         return view('frontend.pages.transaction.payment', [

@@ -357,13 +357,6 @@
                                 </li>
                                 <hr style="margin: 10px 0">
                                 <li class="list-inline-item d-flex justify-content-between">
-                                    <span>Bukti</span>
-                                    <span>
-                                    ${evidence}
-                                    </span>
-                                </li>
-                                <hr style="margin: 10px 0">
-                                <li class="list-inline-item d-flex justify-content-between">
                                     <span>Status</span>
                                     ${status}
                                 </li>
