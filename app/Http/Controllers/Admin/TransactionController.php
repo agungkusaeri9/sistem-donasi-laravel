@@ -114,6 +114,15 @@ class TransactionController extends Controller
                         $ver = request('is_verified') == 1 ? "1" : "0";
                         $instance->where('is_verified', $ver);
                     }
+
+                    if ($request->get('month')) {
+
+                        $instance->whereMonth('created_at', $request->get('month'));
+                    }
+                    if ($request->get('year')) {
+
+                        $instance->whereYear('created_at', $request->get('year'));
+                    }
                 })
                 ->rawColumns(['action', 'verification'])
                 ->make(true);
@@ -128,8 +137,11 @@ class TransactionController extends Controller
      */
     public function destroy($id)
     {
-        Transaction::find($id)->delete();
-        return response()->json(['status' => 'succcess', 'message' => 'Data Transaksi berhasil dihapus.']);
+        $transaction = Transaction::find($id);
+        if ($transaction->is_verified == 1) {
+            return response()->json(['status' => 'error', 'message' => 'Transaksi yang sudah terverifikasi tidak bisa dihapus.']);
+        }
+        return response()->json(['status' => 'success', 'message' => 'Data Transaksi berhasil dihapus.']);
     }
 
     public function changeStatus()
@@ -177,33 +189,30 @@ class TransactionController extends Controller
 
             $program_id = request('program_id');
             $is_verified = request('is_verified');
+            $month = request('month');
+            $year = request('year');
 
             $items = Transaction::with(['payment', 'program']);
             // jika program_id dan is_verified di isi atau 1/2
-            if ($program_id && $is_verified !== NULL) {
-                if ($is_verified == 2) {
-                    $is_verified = 0;
-                }
-
-                $items->where('program_id', $program_id)->where('is_verified', $is_verified)->latest();
-                $payments2 = Transaction::select('payment_id', 'program_id')->where('program_id', $program_id)->where('is_verified', $is_verified)->with(['payment.transactions'])->groupBy('payment_id')->groupBy('program_id')->get();
-            } elseif ($program_id && $is_verified === NULL) {
-                $items->where('program_id', $program_id);
-                $payments2 = Transaction::select('program_id', 'payment_id')->with(['payment.transactions'])->groupBy('payment_id')->groupBy('program_id')->get();
-            } elseif (!$program_id && $is_verified) {
-                if ($is_verified == 2) {
-                    $is_verified = 0;
-                }
-
-                $items->where('is_verified', $is_verified)->latest();
-                $payments2 = Transaction::select('payment_id')->with(['payment.transactions'])->groupBy('payment_id')->get();
-            } else {
-                $items->latest();
-                $payments2 = Transaction::select('payment_id', 'program_id')->with(['payment.transactions'])->groupBy('payment_id')->groupBy('program_id')->get();
+            if ($program_id) {
+                $data = $items->where('program_id', $program_id);
+            }
+            if ($is_verified == 1) {
+                $data = $items->where('is_verified', 1);
+            } elseif ($is_verified == 2) {
+                $data = $items->where('is_verified', 0);
             }
 
+            if ($month) {
+                $data = $items->whereMonth('created_at', $month);
+            }
 
-            $payments = Payments::with(['transactions.program'])->whereIn('id', $payments2->pluck('payment_id'))->groupBy('id')->get();
+            if ($year) {
+                $data = $items->whereYear('created_at', $year);
+            }
+
+            $data = $items->latest();
+
             $count = [
                 'sum_total_program' => Transaction::where('is_verified', 1)->where('program_id', $program_id)->sum('nominal') ?? 0,
                 'sum_total_without_program' => Transaction::where('is_verified', 1)->sum('nominal') ?? 0,
@@ -211,16 +220,18 @@ class TransactionController extends Controller
             ];
 
             $pdf = Pdf::loadView('admin.pages.transaction.print', [
-                'items' => $items->get(),
-                'payments' => $payments,
+                'items' => $data->get(),
                 'program_id' => $program_id,
                 'is_verified' => $is_verified,
-                'count' => $count
+                'count' => $count,
+                'month' => $this->getMonthName($month),
+                'year' => $year
             ]);
             $fileName = "Laporan-transaksi-" . date('Y-m-d') . '.pdf';
             return $pdf->download($fileName);
             // return $pdf->stream();
         } catch (\Throwable $th) {
+            return $th;
             return redirect()->route('admin.transactions.index')->with('error', 'Sistem Bermasalah!');
         }
     }
@@ -230,8 +241,10 @@ class TransactionController extends Controller
         try {
             $program_id = request('program_id');
             $is_verified = request('is_verified');
+            $month =  request('month');
+            $year = request('year');
             $fileName = "Laporan-transaksi-" . date('Y-m-d') . '.xlsx';
-            return Excel::download(new TransactionExport($program_id, $is_verified), $fileName);
+            return Excel::download(new TransactionExport($program_id, $is_verified, $month, $year), $fileName);
         } catch (\Throwable $th) {
             return redirect()->route('admin.transactions.index')->with('error', 'Sistem Bermasalah!');
         }
@@ -287,5 +300,52 @@ class TransactionController extends Controller
         $item = Transaction::onlyTrashed()->find($id);
         $item->restore();
         return response()->json(['status' => 'succcess', 'message' => 'Program berhasil dipulihkan dari keranjang sampah.']);
+    }
+
+    public function getMonthName($monthNumber)
+    {
+        switch ($monthNumber) {
+            case 1:
+                $monthName = "Januari";
+                break;
+            case 2:
+                $monthName = "Februari";
+                break;
+            case 3:
+                $monthName = "Maret";
+                break;
+            case 4:
+                $monthName = "April";
+                break;
+            case 5:
+                $monthName = "Mei";
+                break;
+            case 6:
+                $monthName = "Juni";
+                break;
+            case 7:
+                $monthName = "Juli";
+                break;
+            case 8:
+                $monthName = "Agustus";
+                break;
+            case 9:
+                $monthName = "September";
+                break;
+            case 10:
+                $monthName = "Oktober";
+                break;
+            case 11:
+                $monthName = "November";
+                break;
+            case 12:
+                $monthName = "Desember";
+                break;
+            default:
+                $monthName = NULL;
+                break;
+        }
+
+        return $monthName;
     }
 }

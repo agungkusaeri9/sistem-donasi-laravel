@@ -45,11 +45,11 @@ class DashboardController extends Controller
 
         if (request()->ajax()) {
             $year = Carbon::now()->format('Y');
-            $query = Transaction::select(DB::raw('sum(transactions.nominal) as `nominal`'), DB::raw("DATE_FORMAT(created_at, '%m') month"),  DB::raw('YEAR(created_at) year'))
-            ->groupby('month','year')
-            ->whereYear('created_at',$year)
-            ->orderBy('month','ASC')
-            ->get();
+            $query = Transaction::where('is_verified', 1)->select(DB::raw('sum(transactions.nominal) as `nominal`'), DB::raw("DATE_FORMAT(created_at, '%m') month"),  DB::raw('YEAR(created_at) year'))
+                ->groupby('month', 'year')
+                ->whereYear('created_at', $year)
+                ->orderBy('month', 'ASC')
+                ->get();
 
             $month = [];
             $bg = [];
@@ -58,15 +58,14 @@ class DashboardController extends Controller
             $qNominal = $query->pluck('nominal');
             $qMonth = $query->pluck('month');
 
-            for($i = 0; $i < count($qMonth); $i++)
-            {
+            for ($i = 0; $i < count($qMonth); $i++) {
                 $mn = $this->toMonth($qMonth[$i]);
-                $b = 'rgba('. rand(1,255) .', '. rand(1,255) .', '. rand(1,255) .', 0.2)';
-                $b2 = 'rgba('. rand(1,255) .', '. rand(1,255) .', '. rand(1,255) .', 0.2)';
-                array_push($month,$mn);
-                array_push($bg,$b);
-                array_push($bg2,$b2);
-                array_push($nominal,$qNominal[$i]);
+                $b = 'rgba(' . rand(1, 255) . ', ' . rand(1, 255) . ', ' . rand(1, 255) . ', 0.2)';
+                $b2 = 'rgba(' . rand(1, 255) . ', ' . rand(1, 255) . ', ' . rand(1, 255) . ', 0.2)';
+                array_push($month, $mn);
+                array_push($bg, $b);
+                array_push($bg2, $b2);
+                array_push($nominal, $qNominal[$i]);
             }
 
 

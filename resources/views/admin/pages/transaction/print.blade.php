@@ -58,32 +58,47 @@
 <body>
     <h2 style="text-align: center">Laporan Transaksi</h2>
     <table class="tb-info">
-        <tr>
-            <td style="text-align:left">Nama Program</td>
-            <td> : </td>
-            <td>
-                @if ($program_id)
+        @if ($program_id)
+            <tr>
+                <td style="text-align:left">Nama Program</td>
+                <td> : </td>
+                <td>
                     {{ $items->first()->program->name }}
-                @else
-                    Semua
-                @endif
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align:left">Verifikasi</td>
-            <td> : </td>
-            <td>
-                @if ($is_verified || $is_verified === 0)
+                </td>
+            </tr>
+        @endif
+        @if ($month)
+            <tr>
+                <td style="text-align:left">Bulan</td>
+                <td> : </td>
+                <td>
+                    {{ $month }}
+                </td>
+            </tr>
+        @endif
+        @if ($year)
+            <tr>
+                <td style="text-align:left">Tahun</td>
+                <td> : </td>
+                <td>
+                    {{ $year }}
+                </td>
+            </tr>
+        @endif
+        @if ($is_verified || $is_verified === 0)
+            <tr>
+                <td style="text-align:left">Verifikasi</td>
+                <td> : </td>
+                <td>
                     @if ($is_verified === 0)
                         Tidak
                     @else
                         Ya
                     @endif
-                @else
-                    Semua
-                @endif
-            </td>
-        </tr>
+                </td>
+            </tr>
+        @endif
+
         <tr>
             <td style="text-align:left">Jumlah Donatur</td>
             <td> : </td>
@@ -138,67 +153,16 @@
                     <td>{{ number_format($item->nominal) }}</td>
                     <td>
                         @if ($item->is_verified == 1)
-                        Ya
+                            Ya
                         @else
-                        Tidak
-                    @endif
+                            Tidak
+                        @endif
                     </td>
                     <td>{{ $item->created_at->translatedFormat('h:i:s d-m-Y') }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-
-    {{-- <h3>Rekap Metode Pembayaran</h3>
-    <table class="tb-info">
-        @foreach ($payments as $py)
-            <tr>
-                <td style="text-align:left">{{ $py->name . ' - ' . $py->number . '( ' . $py->description  . ' )'}}</td>
-                <td> : </td>
-                <td>Rp.
-                    @if ($program_id)
-                        @if ($is_verified !== null)
-                            @if ($items->where('is_verified', $is_verified)->sum('nominal') > 0)
-                                {{ number_format($py->transactions->where('is_verified', $is_verified)->where('program_id', $program_id)->sum('nominal')) }}
-                            @else
-                                0
-                            @endif
-                        @else
-                            {{ number_format($py->transactions->where('is_verified', 1)->where('program_id', $program_id)->sum('nominal')) }}
-                        @endif
-                    @else
-                        @if ($is_verified !== null)
-                            @if ($items->where('is_verified', $is_verified)->sum('nominal') > 0)
-                                {{ number_format($py->transactions->where('is_verified', $is_verified)->sum('nominal')) }}
-                            @else
-                                0
-                            @endif
-                        @else
-                            {{ number_format($py->transactions->where('is_verified', 1)->sum('nominal')) }}
-                        @endif
-                    @endif
-                </td>
-            </tr>
-        @endforeach
-
-        <tr class="active-row">
-            <th style="text-align:left">
-                <u>Total</u>
-            </th>
-            <td></td>
-            <td>Rp.
-                @if ($is_verified !== 0)
-                    @if ($program_id)
-                        {{ number_format($count['sum_total_program']) }}
-                    @else
-                        {{ number_format($count['sum_total_without_program']) }}
-                    @endif
-                @else
-                    -
-                @endif
-            </td>
-        </tr>
-    </table> --}}
 </body>
 
 </html>

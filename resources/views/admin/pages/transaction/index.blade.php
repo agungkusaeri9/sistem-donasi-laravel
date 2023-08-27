@@ -28,7 +28,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <div class="form-group">
                                                 <select name="is_verified" id="is_verified" class="form-control ">
                                                     <option value="" selected>Pilih Status</option>
@@ -37,7 +37,39 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-5 col-12">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <select name="month" id="month" class="form-control ">
+                                                    <option value="" selected>Pilih Bulan</option>
+                                                    <option value="1">Januari</option>
+                                                    <option value="2">Februari</option>
+                                                    <option value="3">Maret</option>
+                                                    <option value="4">April</option>
+                                                    <option value="5">Mei</option>
+                                                    <option value="6">Juni</option>
+                                                    <option value="7">Juli</option>
+                                                    <option value="8">Agustus</option>
+                                                    <option value="9">September</option>
+                                                    <option value="10">Oktober</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">Desember</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <select name="year" id="year" class="form-control ">
+                                                    <option value="" selected>Pilih Tahun</option>
+                                                    <option value="2022">2022</option>
+                                                    <option value="2023">2023</option>
+                                                    <option value="2024">2024</option>
+                                                    <option value="2025">2025</option>
+                                                    <option value="2026">2026</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md col-12">
                                             <div class="text-center">
                                                 @can('Transaction Filter')
                                                     <button class="btn mb-1 btn-info btnFilter" type="button"><i
@@ -163,6 +195,8 @@
                     data: function(d) {
                         d.program_id = $('#program_id').val();
                         d.is_verified = $('#is_verified').val();
+                        d.month = $('#month').val();
+                        d.year = $('#year').val();
                     }
                 },
                 columns: [{
@@ -217,6 +251,8 @@
                 let btnName = $(this).data('name');
                 let program_id = $('#program_id').val();
                 let is_verified = $('#is_verified').val();
+                let month = $('#month').val();
+                let year = $('#year').val();
                 if (btnName === 'print')
                     url = "{{ route('admin.transactions.print') }}";
                 else
@@ -233,12 +269,24 @@
                 FN2.setAttribute("type", "hidden");
                 FN2.setAttribute("name", "is_verified");
                 FN2.setAttribute("id", "is_verified2");
+                var FN3 = document.createElement("input");
+                FN3.setAttribute("type", "hidden");
+                FN3.setAttribute("name", "month");
+                FN3.setAttribute("id", "month2");
+                var FN4 = document.createElement("input");
+                FN4.setAttribute("type", "hidden");
+                FN4.setAttribute("name", "year");
+                FN4.setAttribute("id", "year2");
                 form.appendChild(FN);
                 form.appendChild(FN2);
+                form.appendChild(FN3);
+                form.appendChild(FN4);
                 document.getElementsByTagName("body")[0]
                     .appendChild(form);
                 let p2 = $('#program_id2').val(program_id);
                 let iv2 = $('#is_verified2').val(is_verified);
+                let mnth = $('#month2').val(month);
+                let yr = $('#year2').val(year);
                 let token = '{{ csrf_field() }}';
                 $('#formPrint').append('{{ csrf_field() }}');
                 $('#formPrint').submit();
@@ -250,7 +298,7 @@
                 let title = $(this).data('title');
                 Swal.fire({
                     title: 'Apakah Yakin?',
-                    text: `${title} akan dihapus dan tidak bisa dikembalikan!`,
+                    text: `Transaksi akan dihapus dan tidak bisa dikembalikan!`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -265,7 +313,7 @@
                             success: function(response) {
                                 Swal.fire({
                                     position: 'center',
-                                    icon: 'success',
+                                    icon: response.status,
                                     text: response.message,
                                     showConfirmButton: true,
                                     timer: 1500
