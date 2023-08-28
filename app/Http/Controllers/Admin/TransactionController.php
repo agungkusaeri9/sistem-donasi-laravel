@@ -141,6 +141,7 @@ class TransactionController extends Controller
         if ($transaction->is_verified == 1) {
             return response()->json(['status' => 'error', 'message' => 'Transaksi yang sudah terverifikasi tidak bisa dihapus.']);
         }
+        $transaction->delete();
         return response()->json(['status' => 'success', 'message' => 'Data Transaksi berhasil dihapus.']);
     }
 
