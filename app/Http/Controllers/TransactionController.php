@@ -71,9 +71,15 @@ class TransactionController extends Controller
                 $data['user_id'] = auth()->id();
             }
 
+            // cek nominal apakah lebih dari sisa
+            $program = Program::findOrFail(request('program_id'));
+            if (request('nominal') > $program->deficiency()) {
+                $nominal = $program->deficiency();
+            }
+
             $u_code = rand(100, 999);
             $data['u_code'] = $u_code;
-            $data['nominal'] = $data['nominal'] + $u_code;
+            $data['nominal'] = $nominal + $u_code;
             $latest = Transaction::withTrashed()->latest()->first();
             // cek apakah ada transaksi
             if ($latest) {

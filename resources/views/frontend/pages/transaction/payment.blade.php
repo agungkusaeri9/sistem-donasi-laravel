@@ -24,6 +24,15 @@
                 </ul>
             </div>
         @endif
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-warning">
+                    <strong>Perhatian!</strong>
+                    <p>Jika nominal melebihi Rp. {{ number_format($item->deficiency(), 0, '.', '.') }}, maka secara default
+                        nominal donasi nya adalah Rp. {{ number_format($item->deficiency(), 0, '.', '.') }}</p>
+                </div>
+            </div>
+        </div>
         <div class="row mb-2">
             <div class="col-md-12">
                 <div class="card">
