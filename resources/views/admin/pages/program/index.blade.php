@@ -104,6 +104,7 @@
                 processing: true,
                 responsive: true,
                 serverSide: true,
+                searching: false,
                 ajax: {
                     url: '{{ route('admin.program.data') }}',
                     data: function(d) {
@@ -123,23 +124,28 @@
                     },
                     {
                         data: 'donation_collacted',
-                        name: 'donation_collacted'
+                        name: 'donation_collacted',
+                        searchable: false
                     },
                     {
                         data: 'donation_target',
-                        name: 'donation_target'
+                        name: 'donation_target',
+                        searchable: false
                     },
                     {
                         data: 'status_penarikan',
-                        name: 'status_penarikan'
+                        name: 'status_penarikan',
+                        searchable: false
                     },
                     {
                         data: 'status',
-                        name: 'status'
+                        name: 'status',
+                        searchable: false
                     },
                     {
                         data: 'publish',
-                        name: 'publish'
+                        name: 'publish',
+                        searchable: false
                     },
                     {
                         data: 'action',

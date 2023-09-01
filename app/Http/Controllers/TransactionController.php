@@ -75,6 +75,8 @@ class TransactionController extends Controller
             $program = Program::findOrFail(request('program_id'));
             if (request('nominal') > $program->deficiency()) {
                 $nominal = $program->deficiency();
+            } else {
+                $nominal = request('nominal');
             }
 
             $u_code = rand(100, 999);
@@ -112,6 +114,7 @@ class TransactionController extends Controller
             $encrypt_code = encrypt($transaction->code);
             return redirect()->route('success', $encrypt_code)->with(['success', 'Donasi Berhasil silahkan lakukan transfer!', 'code' => $transaction->code]);
         } catch (\Throwable $th) {
+            return $th;
             return redirect()->back()->with('error', 'Donasi Gagal');
         }
     }

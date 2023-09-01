@@ -14,8 +14,8 @@
                     <div class="card">
                         <div class="card-body">
                             @can('Slider Create')
-                            <a href="{{ route('admin.sliders.create') }}" class="btn btn-sm btn-primary mb-3 btnAdd"><i
-                                class="fas fa-plus"></i> Tambah Data</a>
+                                <a href="{{ route('admin.sliders.create') }}" class="btn btn-sm btn-primary mb-3 btnAdd"><i
+                                        class="fas fa-plus"></i> Tambah Data</a>
                             @endcan
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover" id="dTable">
@@ -89,7 +89,8 @@
                     },
                     {
                         data: 'status',
-                        name: 'status'
+                        name: 'status',
+                        searchable: false
                     },
                     {
                         data: 'created',

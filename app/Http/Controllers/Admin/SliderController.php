@@ -53,7 +53,6 @@ class SliderController extends Controller
                         $detail = "";
                     }
 
-
                     if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Slider Edit')) {
                         $edit = "<a href='$route' class='btn btn-sm btn-info btnEdit mx-1' data-id='$model->id' data-title='$model->title'><i class='fas fa fa-edit'></i> Edit</a>";
                     } else {

@@ -108,7 +108,8 @@
                     },
                     {
                         data: 'icon',
-                        name: 'icon'
+                        name: 'icon',
+                        searchable: false
                     },
                     {
                         data: 'name',
@@ -116,7 +117,8 @@
                     },
                     {
                         data: 'link',
-                        name: 'link'
+                        name: 'link',
+                        searchable: false
                     },
                     {
                         data: 'action',

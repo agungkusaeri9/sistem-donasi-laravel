@@ -190,6 +190,7 @@
             let otable = $('#dTable').DataTable({
                 processing: true,
                 serverSide: true,
+                searching: false,
                 ajax: {
                     url: '{{ route('admin.transactions.data') }}',
                     data: function(d) {
@@ -210,7 +211,6 @@
                         data: 'invoice',
                         name: 'invoice'
                     },
-
                     {
                         data: 'program_name',
                         name: 'program_name'
@@ -221,11 +221,13 @@
                     },
                     {
                         data: 'nominal',
-                        name: 'nominal'
+                        name: 'nominal',
+                        searchable: false
                     },
                     {
                         data: 'verification',
-                        name: 'verification'
+                        name: 'verification',
+                        searchable: false
                     },
                     {
                         data: 'created',
@@ -241,6 +243,7 @@
             });
 
             $('.btnFilter').on('click', function() {
+
                 otable.draw();
             });
 
