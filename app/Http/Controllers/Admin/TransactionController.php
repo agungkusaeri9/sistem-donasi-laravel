@@ -215,7 +215,7 @@ class TransactionController extends Controller
             $data = $items->latest();
 
             $count = [
-                'sum_total_program' => Transaction::where('is_verified', 1)->where('program_id', $program_id)->sum('nominal') ?? 0,
+                'sum_total_program' => $data->sum('nominal'),
                 'sum_total_without_program' => Transaction::where('is_verified', 1)->sum('nominal') ?? 0,
                 'sum_not_total' => Transaction::where('is_verified', 0)->where('program_id', $program_id)->sum('nominal') ?? 0
             ];
@@ -229,8 +229,8 @@ class TransactionController extends Controller
                 'year' => $year
             ]);
             $fileName = "Laporan-transaksi-" . date('Y-m-d') . '.pdf';
-            return $pdf->download($fileName);
-            // return $pdf->stream();
+            // return $pdf->download($fileName);
+            return $pdf->stream();
         } catch (\Throwable $th) {
             return $th;
             return redirect()->route('admin.transactions.index')->with('error', 'Sistem Bermasalah!');

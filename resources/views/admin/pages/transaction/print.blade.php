@@ -111,10 +111,10 @@
             </td>
         </tr>
         <tr>
-            <td style="text-align:left">Terkumpul</td>
+            <td style="text-align:left">Total</td>
             <td> : </td>
             <td>Rp.
-                @if ($is_verified !== 0)
+                {{-- @if ($is_verified !== 0)
                     @if ($program_id)
                         {{ number_format($count['sum_total_program']) }}
                     @else
@@ -122,7 +122,8 @@
                     @endif
                 @else
                     -
-                @endif
+                @endif --}}
+                {{ number_format($count['sum_total_program']) }}
             </td>
         </tr>
         <tr>
