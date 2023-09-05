@@ -28,10 +28,12 @@
         <tr>
             <td style="text-align:left" colspan="2">Verifikasi</td>
             <td>
-                @if ($is_verified === 0)
-                    Tidak
-                @else
+                @if ($is_verified == 0)
+                    Semua
+                @elseif($is_verified == 1)
                     Ya
+                @else
+                    Tidak
                 @endif
             </td>
         </tr>

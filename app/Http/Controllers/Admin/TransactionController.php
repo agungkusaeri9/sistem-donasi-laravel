@@ -198,6 +198,7 @@ class TransactionController extends Controller
             if ($program_id) {
                 $data = $items->where('program_id', $program_id);
             }
+
             if ($is_verified == 1) {
                 $data = $items->where('is_verified', 1);
             } elseif ($is_verified == 2) {
@@ -219,6 +220,7 @@ class TransactionController extends Controller
                 'sum_total_without_program' => Transaction::where('is_verified', 1)->sum('nominal') ?? 0,
                 'sum_not_total' => Transaction::where('is_verified', 0)->where('program_id', $program_id)->sum('nominal') ?? 0
             ];
+
 
             $pdf = Pdf::loadView('admin.pages.transaction.print', [
                 'items' => $data->get(),

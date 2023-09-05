@@ -90,10 +90,12 @@
                 <td style="text-align:left">Verifikasi</td>
                 <td> : </td>
                 <td>
-                    @if ($is_verified === 0)
-                        Tidak
-                    @else
+                    @if ($is_verified == 0)
+                        Semua
+                    @elseif($is_verified == 1)
                         Ya
+                    @else
+                        Tidak
                     @endif
                 </td>
             </tr>
