@@ -229,8 +229,8 @@ class TransactionController extends Controller
                 'year' => $year
             ]);
             $fileName = "Laporan-transaksi-" . date('Y-m-d') . '.pdf';
-            // return $pdf->download($fileName);
-            return $pdf->stream();
+            return $pdf->download($fileName);
+            // return $pdf->stream();
         } catch (\Throwable $th) {
             return $th;
             return redirect()->route('admin.transactions.index')->with('error', 'Sistem Bermasalah!');
