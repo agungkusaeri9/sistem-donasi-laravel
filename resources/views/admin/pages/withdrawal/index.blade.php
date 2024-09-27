@@ -27,6 +27,10 @@
                                             <th>Nominal Biaya Manual</th>
                                             <th>Nominal Biaya Otomatis (Midtrans)</th>
                                             <th>Total Nominal</th>
+                                            <th>Biaya Admin</th>
+                                            <th>Nominal Dicairkan</th>
+                                            <th>Bank Tujuan</th>
+                                            <th>Bukti Pembayaran</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -37,6 +41,26 @@
             </div>
         </div>
     </section>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalBukti" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Bukti Transfer</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img src="" class="img-fluid imgModalBukti" alt="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @push('styles')
     <link rel="stylesheet" href="{{ asset('assets/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
@@ -90,9 +114,31 @@
                     {
                         data: 'amount_total',
                         name: 'amount_total'
+                    },
+                    {
+                        data: 'admin_fee',
+                        name: 'admin_fee'
+                    },
+                    {
+                        data: 'dicairkan',
+                        name: 'dicairkan'
+                    },
+                    {
+                        data: 'bank_tujuan',
+                        name: 'bank_tujuan'
+                    },
+                    {
+                        data: 'proof',
+                        name: 'proof'
                     }
                 ]
             });
+
+            $('body').on('click', '.btnBukti', function() {
+                let url = $(this).data('url');
+                $('.imgModalBukti').attr('src', url);
+                $('#modalBukti').modal('show');
+            })
 
         })
     </script>

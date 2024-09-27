@@ -61,44 +61,23 @@ class ProgramController extends Controller
 
                     $route = route('admin.program.edit', $model->id);
                     $routeDetail = route('admin.program.show', $model->id);
-                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Program Detail')) {
-                        $detail = "<a href='$routeDetail' class='btn btn-sm btn-warning btnDetail mx-1' data-id='$model->id' data-title='$model->title'><i class='fas fa fa-eye'></i> Detail</a>";
-                    } else {
-                        $detail = "";
-                    }
-
-                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Program Edit')) {
-                        $edit = "<a href='$route' class='btn btn-sm btn-info btnEdit mx-1' data-id='$model->id' data-title='$model->title'><i class='fas fa fa-edit'></i> Edit</a>";
-                    } else {
-                        $edit = "";
-                    }
-
-                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Program Delete')) {
-                        $delete = "<button class='btn btn-sm btn-danger btnDelete mx-1' data-id='$model->id' data-title='$model->title'><i class='fas fa fa-trash'></i> Hapus</button>";
-                    } else {
-                        $delete = "";
-                    }
-                    $action = $detail . $edit . $delete;
+                    $detail = "<a href='$routeDetail' class='btn btn-sm btn-warning btnDetail mx-1' data-id='$model->id' data-title='$model->title'><i class='fas fa fa-eye'></i> Detail</a>";
+                    $edit = "<a href='$route' class='btn btn-sm btn-info btnEdit mx-1' data-id='$model->id' data-title='$model->title'><i class='fas fa fa-edit'></i> Edit</a>";
+                    $action = $detail . $edit;
                     return $action;
                 })
                 ->editColumn('publish', function ($model) {
-                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Program Change Status')) {
-                        if ($model->is_published == 1) {
-                            $is_published = '<div class="custom-control custom-switch">
-                                    <input type="checkbox" value=' . $model->is_published . ' class="custom-control-input btnIsPublished" checked id=' . $model->id . ' data-id="' . $model->id . '">
+                    if ($model->is_published == 1) {
+                        $is_published = '<div class="custom-control custom-switch">
+                                <input type="checkbox" value=' . $model->is_published . ' class="custom-control-input btnIsPublished" checked id=' . $model->id . ' data-id="' . $model->id . '">
+                                <label class="custom-control-label" for=' . $model->id . '></label>
+                            </div>';
+                    } else {
+                        $is_published = '<div class="custom-control custom-switch">
+                                    <input type="checkbox"  value=' . $model->is_published . ' class="custom-control-input btnIsPublished" id=' . $model->id . ' data-id="' . $model->id . '">
                                     <label class="custom-control-label" for=' . $model->id . '></label>
                                 </div>';
-                        } else {
-                            $is_published = '<div class="custom-control custom-switch">
-                                        <input type="checkbox"  value=' . $model->is_published . ' class="custom-control-input btnIsPublished" id=' . $model->id . ' data-id="' . $model->id . '">
-                                        <label class="custom-control-label" for=' . $model->id . '></label>
-                                    </div>';
-                        }
-                    } else {
-                        $is_published = "";
                     }
-
-
                     return $is_published;
                 })
                 ->editColumn('status', function ($model) {
@@ -270,6 +249,7 @@ class ProgramController extends Controller
         ]);
         DB::beginTransaction();
         try {
+            $statusSebelumnya = $item->status;
             $data = request()->except(['budget_name', 'budget_nominal']);
             $budget_name = request('budget_name');
             $budget_nominal = request('budget_nominal');
@@ -299,6 +279,14 @@ class ProgramController extends Controller
             $data['slug'] = Str::slug(request('name'));
             $data['user_id'] = auth()->id();
             $item->update($data);
+
+
+            // update publikasi ke 0
+            if (request('status') == 2 && $statusSebelumnya != 2) {
+                $item->update([
+                    'is_published' => 0
+                ]);
+            }
 
             // delete budgets
             ProgramBudget::where('program_id', $item->id)->delete();
@@ -431,6 +419,8 @@ class ProgramController extends Controller
         $program['manual_payment_amount'] = $program->transactions_success()->where('type', 'manual')->sum('nominal');
         $program['automatic_payment_amount'] = $program->transactions_success()->where('type', 'otomatis')->sum('nominal');
         $program['amount_total'] = $program->transactions_success()->sum('nominal');
+        $program['admin_fee'] = $program->admin_fee_nominal();
+        $program['dicairkan'] = $program->dicairkan();
         return response()->json($program);
     }
 }

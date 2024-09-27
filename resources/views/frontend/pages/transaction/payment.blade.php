@@ -102,6 +102,17 @@
                 </div>
             </div>
         </div>
+        @if (env('APP_ENV') === 'local')
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert alert-info">
+                        <p>Berhubung masih tahap development. Untuk metode pembayaran otomatis saat tidak difungsikan. <br>
+                            Silahkan hubungi admin untuk informasi lebih jelasnya.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        @endif
         <form action="{{ route('donate') }}" method="post">
             <div class="row mb-2">
                 <div class="col-md-12">

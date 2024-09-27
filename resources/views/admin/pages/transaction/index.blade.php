@@ -295,50 +295,6 @@
                 $('#formPrint').submit();
             })
 
-            $('body').on('click', '.btnDelete', function(e) {
-                e.preventDefault();
-                let id = $(this).data('id');
-                let title = $(this).data('title');
-                Swal.fire({
-                    title: 'Apakah Yakin?',
-                    text: `Transaksi akan dihapus dan tidak bisa dikembalikan!`,
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yakin'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            url: '{{ url('admin/transactions/') }}' + '/' + id,
-                            type: 'DELETE',
-                            dataType: 'JSON',
-                            success: function(response) {
-                                Swal.fire({
-                                    position: 'center',
-                                    icon: response.status,
-                                    text: response.message,
-                                    showConfirmButton: true,
-                                    timer: 1500
-                                })
-                                otable.ajax.reload();
-                                $('#myModal').modal('hide');
-
-                            },
-                            error: function(response) {
-                                Swal.fire({
-                                    position: 'center',
-                                    icon: 'error',
-                                    text: response.responseJSON.errors.name,
-                                    showConfirmButton: true,
-                                    timer: 1500
-                                })
-                            }
-                        })
-                    }
-                })
-            })
-
             $('body').on('click', '.btnDetail', function() {
                 let id = $(this).data('id');
                 $.ajax({
@@ -442,38 +398,57 @@
             })
 
             $('body').on('change', '.btnStatus', function() {
+                $(this).prop("checked", false);
                 let id = $(this).data('id');
                 let status = $(this).val();
-                $.ajax({
-                    url: '{{ route('admin.transactions.change-status') }}',
-                    type: 'POST',
-                    dataType: 'JSON',
-                    data: {
-                        id: id,
-                        status: status
-                    },
-                    success: function(response) {
-                        Swal.fire({
-                            position: 'center',
-                            icon: response.status,
-                            text: response.message,
-                            showConfirmButton: true,
-                            timer: 1500
+                if (status == 1) {
+                    return false;
+                }
+                Swal.fire({
+                    title: 'Apakah Yakin?',
+                    text: `Transaksi yang sudah diverifikasi tidak dapat dirubah kembali.`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yakin'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '{{ route('admin.transactions.change-status') }}',
+                            type: 'POST',
+                            dataType: 'JSON',
+                            data: {
+                                id: id,
+                                status: status
+                            },
+                            success: function(response) {
+                                Swal.fire({
+                                    position: 'center',
+                                    icon: response.status,
+                                    text: response.message,
+                                    showConfirmButton: true,
+                                    timer: 1500
+                                })
+                                otable.ajax.reload();
+                            },
+                            error: function(response) {
+                                let errors = [];
+                                $.each(response.responseJSON.errors, function(key,
+                                    value) {
+                                    errors += `${value}<br>`;
+                                });
+                                Swal.fire({
+                                    position: 'center',
+                                    icon: 'error',
+                                    html: errors,
+                                    showConfirmButton: true,
+                                    timer: 1500
+                                })
+                            }
                         })
-                        otable.ajax.reload();
-                    },
-                    error: function(response) {
-                        let errors = [];
-                        $.each(response.responseJSON.errors, function(key, value) {
-                            errors += `${value}<br>`;
-                        });
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'error',
-                            html: errors,
-                            showConfirmButton: true,
-                            timer: 1500
-                        })
+                    } else {
+                        $(this).prop("checked", false);
                     }
                 })
             })

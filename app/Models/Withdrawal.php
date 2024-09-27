@@ -15,4 +15,14 @@ class Withdrawal extends Model
     {
         return $this->belongsTo(Program::class);
     }
+
+    public function bankComplete()
+    {
+        return $this->bank_name . '<br>' . $this->bank_number . '<br>' . $this->bank_owner;
+    }
+
+    public function proof()
+    {
+        return asset('storage/' . $this->proof);
+    }
 }

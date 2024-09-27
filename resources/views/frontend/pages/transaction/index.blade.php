@@ -15,12 +15,12 @@
     </div>
     <div class="container">
         <div class="row">
-            @include('frontend.layouts.partials.sidebar')
-            <div class="col-md-9">
+            {{-- @include('frontend.layouts.partials.sidebar') --}}
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped dTable nowrap">
+                            <table class="table table-borderless dTable nowrap">
                                 <thead>
                                     <tr>
                                         <td>#</td>
@@ -40,7 +40,7 @@
                                             <td class="">{{ $item->program->name ?? '-' }}</td>
                                             <td>
                                                 @if ($item->type === 'otomatis')
-                                                    <a href="{{ route('success', encrypt($item->code)) }}"
+                                                    <a href="{{ route('success', $item->uuid) }}"
                                                         class="btn-sm btn-link">Lihat Detail</a>
                                                 @else
                                                     {{ $item->payment->name . ' - ' . $item->payment->number }}
@@ -49,9 +49,9 @@
                                             <td class="">Rp. {{ number_format($item->nominal) }}</td>
                                             <td class="fs-7 text-center">
                                                 @if ($item->is_verified == 1)
-                                                    <span class="badge bg-success">Terverivikasi</span>
+                                                    <span class="badge text-white py-2 bg-success">Terverivikasi</span>
                                                 @else
-                                                    <span class="badge bg-danger">Tidak Terverivikasi</span>
+                                                    <span class="badge text-white py-2 bg-danger">Tidak Terverivikasi</span>
                                                 @endif
                                             </td>
                                             <td>

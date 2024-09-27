@@ -61,9 +61,10 @@
                                                 <Address>
                                                     <strong>Transaksi Status</strong><br>
                                                     @if ($item->is_verified == 1)
-                                                        <span class="badge bg-success">Terverifikasi</span>
+                                                        <span class="badge bg-success text-white py-2">Terverifikasi</span>
                                                     @else
-                                                        <span class="badge bg-danger">Tidak Terverifikasi</span>
+                                                        <span class="badge bg-danger text-white py-2">Tidak
+                                                            Terverifikasi</span>
                                                     @endif
                                                 </Address>
                                             </div>

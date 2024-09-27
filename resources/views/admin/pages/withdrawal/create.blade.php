@@ -73,6 +73,76 @@
                                         </div>
                                     @enderror
                                 </div>
+                                <div class='form-group mb-3'>
+                                    <label for='admin_fee' class='mb-2'>Biaya Admin</label>
+                                    <input type='text' class='form-control @error('admin_fee') is-invalid @enderror'
+                                        value='{{ old('admin_fee') }}' id="admin_fee" readonly>
+
+                                    @error('admin_fee')
+                                        <div class='invalid-feedback'>
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class='form-group mb-3'>
+                                    <label for='dicairkan' class='mb-2'>Total Dicairkan</label>
+                                    <input type='text' class='form-control @error('dicairkan') is-invalid @enderror'
+                                        value='{{ old('dicairkan') }}' id="dicairkan" readonly>
+
+                                    @error('dicairkan')
+                                        <div class='invalid-feedback'>
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class='form-group mb-3'>
+                                    <label for='bank_name' class='mb-2'>Nama Bank <span
+                                            class='text-danger'>*</span></label>
+                                    <input type='text' name='bank_name' id='bank_name'
+                                        class='form-control @error('bank_name') is-invalid @enderror'
+                                        value='{{ old('bank_name') }}'>
+                                    @error('bank_name')
+                                        <div class='invalid-feedback'>
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class='form-group mb-3'>
+                                    <label for='bank_number' class='mb-2'>Nomor Rekening <span
+                                            class='text-danger'>*</span></label>
+                                    <input type='number' name='bank_number' id='bank_number'
+                                        class='form-control @error('bank_number') is-invalid @enderror'
+                                        value='{{ old('bank_number') }}'>
+                                    @error('bank_number')
+                                        <div class='invalid-feedback'>
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class='form-group mb-3'>
+                                    <label for='bank_owner' class='mb-2'>Pemilik <span
+                                            class='text-danger'>*</span></label>
+                                    <input type='text' name='bank_owner' id='bank_owner'
+                                        class='form-control @error('bank_owner') is-invalid @enderror'
+                                        value='{{ old('bank_owner') }}'>
+                                    @error('bank_owner')
+                                        <div class='invalid-feedback'>
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class='form-group mb-3'>
+                                    <label for='proof' class='mb-2'>Bukti Transfer <span
+                                            class='text-danger'>*</span></label>
+                                    <input type='file' name='proof' id='proof'
+                                        class='form-control @error('proof') is-invalid @enderror'
+                                        value='{{ old('proof') }}'>
+                                    @error('proof')
+                                        <div class='invalid-feedback'>
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
                                 <div class="form-group">
                                     <button type="button" class="btn btn-block btn-primary btnSubmit"><i
                                             class="fas fa-plus"></i>
@@ -105,20 +175,12 @@
                 }
             });
 
-            function formatRupiah(amount) {
-                if (amount < 1) {
-                    return 0;
-                } else {
-                    amount = Number(amount.replace(/[^\d]/g, ''));
-
-                    // Format angka menjadi format mata uang Rupiah
-                    return new Intl.NumberFormat('id-ID', {
-                        style: 'currency',
-                        currency: 'IDR',
-                        minimumFractionDigits: 0,
-                        maximumFractionDigits: 0
-                    }).format(amount);
-                }
+            function formatRupiah(angka) {
+                return new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                }).format(angka);
             }
 
             $('.select2').select2({
@@ -136,9 +198,12 @@
                     type: 'POST',
                     dataType: 'JSON',
                     success: function(response) {
+                        console.log(response);
                         $('#manual_payment_amount').val(response.manual_payment_amount);
                         $('#automatic_payment_amount').val(response.automatic_payment_amount);
                         $('#amount_total').val(response.amount_total);
+                        $('#admin_fee').val(formatRupiah(response.admin_fee));
+                        $('#dicairkan').val(formatRupiah(response.dicairkan));
 
                         $('#manual_payment_amount2').val(formatRupiah(response
                             .manual_payment_amount));

@@ -113,4 +113,27 @@ class Program extends Model
     {
         return $this->transactions_success->sum('nominal');
     }
+
+    public function admin_fee()
+    {
+        return $this->hasMany(ProgramBudget::class, 'program_id')
+            ->where('name', 'Biaya Admin');
+    }
+
+    public function admin_fee_nominal()
+    {
+        $adminFee = $this->hasOne(ProgramBudget::class, 'program_id')
+            ->where('name', 'Biaya Admin')
+            ->first();
+
+        return $adminFee ? $adminFee->nominal : null; // Ambil nominal atau null jika tidak ada
+    }
+
+    public function dicairkan()
+    {
+        $total = $this->donation_collacted();
+        $admin_fee = $this->admin_fee_nominal();
+        $dicairkan = $total - $admin_fee;
+        return $dicairkan;
+    }
 }

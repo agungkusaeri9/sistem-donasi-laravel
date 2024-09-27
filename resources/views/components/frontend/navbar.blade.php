@@ -47,6 +47,7 @@
                                                     <li><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                                                 @endif
                                                 <li><a href="{{ route('profile.index') }}">Profile</a></li>
+                                                <li><a href="{{ route('donate') }}">Riwayat Donasi</a></li>
                                                 <li> <a href="javascript:void()"
                                                         onclick="document.getElementById('formLogout').submit()">Logout</a>
                                                 </li>

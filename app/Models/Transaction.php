@@ -61,7 +61,7 @@ class Transaction extends Model
         if ($this->is_verified == 1) {
             return ' <span class="badge py-2 badge-success">Terverifikasi</span>';
         } else {
-            return ' <span class="badge py-2 badge-warning">Tidak Terverivikasi</span>';
+            return ' <span class="badge py-2 badge-danger">Tidak Terverivikasi</span>';
         }
     }
 

@@ -41,7 +41,7 @@
 
     <div class="container">
         @foreach ($campaign_categories as $campaign_category)
-            <div class="row">
+            <div class="row mt-3">
                 <div class="col-12">
                     <h5>{{ $campaign_category->name }}</h5>
                 </div>

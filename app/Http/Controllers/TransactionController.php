@@ -101,6 +101,7 @@ class TransactionController extends Controller
 
             // dd($latest_id);
             $data['code'] = $new_code;
+            $data['uuid'] = \Str::uuid();
             // insert ke db
             $transaction = Transaction::create($data);
 
@@ -111,21 +112,16 @@ class TransactionController extends Controller
                 // send notification donatur
                 Wablas::send($transaction->id, $transaction->phone_number, 'Created');
             }
-            $encrypt_code = encrypt($transaction->code);
-            return redirect()->route('success', $encrypt_code)->with(['success', 'Donasi Berhasil silahkan lakukan transfer!', 'code' => $transaction->code]);
+            return redirect()->route('success', $transaction->uuid)->with(['success', 'Donasi Berhasil dilakukan. Silahkan lakukan pembayaran!', 'code' => $transaction->code]);
         } catch (\Throwable $th) {
             return $th;
             return redirect()->back()->with('error', 'Donasi Gagal');
         }
     }
 
-    public function success($token)
+    public function success($uuid)
     {
-        $code = decrypt($token);
-        if (!$code) {
-            return redirect()->route('home');
-        }
-        $item = Transaction::where('code', $code)->first();
+        $item = Transaction::where('uuid', $uuid)->firstOrFail();
         $setting = Setting::first();
         return view('frontend.pages.transaction.success', [
             'title' => 'Berhasil',

@@ -15,12 +15,11 @@
     </div>
     <div class="container">
         <div class="row">
-            @include('frontend.layouts.partials.sidebar')
-            <div class="col-md-9">
+            {{-- @include('frontend.layouts.partials.sidebar') --}}
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="text-center">
-                            <h5 class="mb-4">Profile Saya</h5>
                             <img src="{{ auth()->user()->avatar() }}" alt="{{ auth()->user()->name }}"
                                 class="img-fluid rounded-circle mb-3" style="max-height: 90px;max-width:90px;">
                         </div>

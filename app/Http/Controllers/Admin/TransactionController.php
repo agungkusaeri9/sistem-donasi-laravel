@@ -46,53 +46,36 @@ class TransactionController extends Controller
                     return 'Rp. ' . number_format($model->nominal);
                 })
                 ->addColumn('action', function ($model) {
-                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Transaction Detail')) {
-                        $detail = "<button class='btn btn-sm btn-warning btnDetail mx-1' data-id='$model->id' data-title='$model->name'><i class='fas fa fa-eye'></i> Detail</button>";
-                    } else {
-                        $detail = "";
-                    }
-
-                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Transaction Delete')) {
-                        $delete = "<button class='btn btn-sm btn-danger btnDelete mx-1' data-id='$model->id' data-title='$model->name'><i class='fas fa fa-trash'></i> Hapus</button>";
-                    } else {
-                        $delete = "";
-                    }
-                    $action = $detail . $delete;
+                    $detail = "<button class='btn btn-sm btn-warning btnDetail mx-1' data-id='$model->id' data-title='$model->name'><i class='fas fa fa-eye'></i> Detail</button>";
+                    $action = $detail;
                     return $action;
                 })
                 ->addColumn('verification', function ($model) {
-                    if (auth()->user()->getRoleNames()->first() === 'Admin' || auth()->user()->getPermissions('Transaction Change Status')) {
-
-                        if ($model->is_verified == 1) {
-                            if ($model->type === 'otomatis') {
-                                $is_verified = '<div class="custom-control custom-switch">
-                                    <input type="checkbox" value=' . $model->is_verified . ' class="custom-control-input btnStatus" checked id=' . $model->id . ' data-id="' . $model->id . '" disabled title="tidak bisa dikarenakan">
-                                    <label class="custom-control-label btnDisabled" for=' . $model->id . '></label>
-                                </div>';
-                            } else {
-                                $is_verified = '<div class="custom-control custom-switch">
-                                    <input type="checkbox" value=' . $model->is_verified . ' class="custom-control-input btnStatus" checked id=' . $model->id . ' data-id="' . $model->id . '" title="tidak bisa dikarenakan">
-                                    <label class="custom-control-label" for=' . $model->id . '></label>
-                                </div>';
-                            }
+                    if ($model->is_verified == 1) {
+                        if ($model->type === 'otomatis') {
+                            $is_verified = '<div class="custom-control custom-switch">
+                                <input type="checkbox" value=' . $model->is_verified . ' class="custom-control-input btnStatus" checked id=' . $model->id . ' data-id="' . $model->id . '" disabled title="tidak bisa dikarenakan">
+                                <label class="custom-control-label btnDisabled" for=' . $model->id . '></label>
+                            </div>';
                         } else {
-                            if ($model->type === 'otomatis') {
-                                $is_verified = '<div class="custom-control custom-switch">
-                                        <input type="checkbox"  value=' . $model->is_verified . ' class="custom-control-input btnStatus" id=' . $model->id . ' data-id="' . $model->id . '" disabled title="tidak bisa dikarenakan">
-                                        <label class="custom-control-label btnDisabled" for=' . $model->id . '></label>
-                                    </div>';
-                            } else {
-                                $is_verified = '<div class="custom-control custom-switch">
-                                        <input type="checkbox"  value=' . $model->is_verified . ' class="custom-control-input btnStatus" id=' . $model->id . ' data-id="' . $model->id . '" title="tidak bisa dikarenakan">
-                                        <label class="custom-control-label" for=' . $model->id . '></label>
-                                    </div>';
-                            }
+                            $is_verified = '<div class="custom-control custom-switch">
+                                <input type="checkbox" value=' . $model->is_verified . ' class="custom-control-input btnStatus" checked id=' . $model->id . ' data-id="' . $model->id . '" title="tidak bisa dikarenakan" disabled>
+                                <label class="custom-control-label" for=' . $model->id . '></label>
+                            </div>';
                         }
                     } else {
-                        $is_verified = "";
+                        if ($model->type === 'otomatis') {
+                            $is_verified = '<div class="custom-control custom-switch">
+                                    <input type="checkbox"  value=' . $model->is_verified . ' class="custom-control-input btnStatus" id=' . $model->id . ' data-id="' . $model->id . '" disabled title="tidak bisa dikarenakan">
+                                    <label class="custom-control-label btnDisabled" for=' . $model->id . '></label>
+                                </div>';
+                        } else {
+                            $is_verified = '<div class="custom-control custom-switch">
+                                    <input type="checkbox"  value=' . $model->is_verified . ' class="custom-control-input btnStatus" id=' . $model->id . ' data-id="' . $model->id . '" title="tidak bisa dikarenakan">
+                                    <label class="custom-control-label" for=' . $model->id . '></label>
+                                </div>';
+                        }
                     }
-
-
                     return $is_verified;
                 })
                 ->addColumn('program_name', function ($model) {

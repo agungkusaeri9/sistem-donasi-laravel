@@ -13,6 +13,11 @@ class ProgramBudget extends Model
 
     public function program()
     {
-        return $this->belongsTo(Program::class,'program_id','id');
+        return $this->belongsTo(Program::class, 'program_id', 'id');
+    }
+
+    public function admin_fee()
+    {
+        return $this->where('name', 'Biaya Admin')->first()->nominal;
     }
 }
