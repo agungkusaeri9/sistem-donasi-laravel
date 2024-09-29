@@ -1,6 +1,6 @@
 <header>
     <!-- Header Start -->
-    <div class="header-area header-transparrent ">
+    <div class="header-area header-transparrent shadow">
         <div class="main-header header-sticky">
             <div class="container">
                 <div class="row align-items-center">
@@ -20,15 +20,7 @@
                                     <li class="{{ request()->is('/') ? 'active' : '' }}"><a href="{{ route('home') }}">
                                             Home</a></li>
                                     <li class="{{ request()->is('campaign', 'campaign/*') ? 'active' : '' }}"><a
-                                            href="{{ route('campaign.index') }}">Donasikan</a>
-                                        <ul class="submenu">
-                                            @foreach ($categories as $category)
-                                                <li><a
-                                                        href="{{ route('campaign.category', $category->slug) }}">{{ $category->name }}</a>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    </li>
+                                            href="{{ route('campaign.index') }}">Donasi</a></li>
 
                                     <li class="{{ request()->is('artikel', 'artikel/*') ? 'active' : '' }}"><a
                                             href="{{ route('artikel.index') }}">Blog</a></li>

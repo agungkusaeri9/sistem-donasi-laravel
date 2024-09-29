@@ -5,7 +5,7 @@
             <!-- Section-tittle -->
             <div class="row d-flex justify-content-center">
                 <div class="col-lg-8">
-                    <div class="section-tittle text-center mb-80">
+                    <div class="section-tittle text-center">
                         <h2>
                             @if ($category)
                                 Campaign Kategori "{{ $category->name }}"
@@ -21,7 +21,7 @@
     <section class="campaign">
         <div class="container">
             <div class="row mb-2 mt-4">
-                <div class="col-md-8">
+                {{-- <div class="col-md-8">
                     <a href="{{ route('campaign.index') }}" class="text-decoration-none">
                         <span
                             class="btn btn-sm py-4 btn-outline-dark @if (!$category) active @endif p-2 ">Semua</span>
@@ -32,8 +32,8 @@
                                 class="btn py-4 btn-sm btn-outline-dark p-2 @if ($category && $category->id == $cat->id) active @endif">{{ $cat->name }}</span>
                         </a>
                     @endforeach
-                </div>
-                <div class="col-md-4">
+                </div> --}}
+                <div class="col-md-12">
                     <form action="{{ route('campaign.search') }}" method="get">
                         <div class="input-group input-group-lg mb-3">
                             <input type="text" class="form-control small rounded- input-group-lg" name="keyword"
@@ -51,9 +51,9 @@
                     <div class="col-md-3 col-6 mb-4">
                         <a href="{{ route('campaign.show', $item->slug) }}" class="text-decoration-none text-dark">
                             <div class="card card-campaign border-0">
-                                <div class="card-body">
+                                <div class="card-body p-0">
                                     <img src="{{ $item->image() }}" alt="" class="img-fluid" />
-                                    <h6 class="title mt-2">
+                                    <h6 class="title mt-2 text-justify">
                                         {{ $item->name }}
                                     </h6>
                                     <div class="progress mb-2">

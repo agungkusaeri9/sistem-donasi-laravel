@@ -67,11 +67,11 @@
                     <h6 class="mt-4 mb-3">Donatur ({{ $item->transactions_success_count }})</h6>
                     @foreach ($item->transactions_success as $transaction)
                         <div class="row">
-                            <div class="col-md-2">
+                            <div class="col-2">
                                 <img src="{{ $transaction->avatar() }}" class="img-fluid rounded-circle" alt=""
-                                    style="height: 60px; width: 60px" />
+                                    style="max-height: 60px; max-width: 60px" />
                             </div>
-                            <div class="col-md-10">
+                            <div class="col-10">
                                 <p>
                                     <span class="text-dark">
                                         {{ $transaction->name() }}
@@ -144,7 +144,9 @@
 @endsection
 @push('styles')
     <style>
-        .active {}
+        #detail img {
+            width: 100% !important;
+        }
     </style>
     <link rel="stylesheet" href="{{ asset('assets/sweetalert2/sweetalert2.all.min.js') }}">
     <link rel="stylesheet" href="{{ asset('assets/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">

@@ -41,29 +41,21 @@
                             <div class="footer-tittle">
                                 <h4 class="text-light">Metode Pembayaran</h4>
                                 <div class="row">
-                                    <div class="col-4 mx-0 mb-1">
-                                        <img src="{{ asset('assets/frontend/img/bni.png') }}" alt=""
-                                            class="img-fluid">
-                                    </div>
-                                    <div class="col-4 mx-0 mb-1">
-                                        <img src="{{ asset('assets/frontend/img/bca.png') }}" alt=""
-                                            class="img-fluid">
-                                    </div>
-                                    <div class="col-4 mx-0 mb-1">
-                                        <img src="{{ asset('assets/frontend/img/mandiri.png') }}" alt=""
-                                            class="img-fluid">
-                                    </div>
-                                    <div class="col-4 mx-0 mb-1">
-                                        <img src="{{ asset('assets/frontend/img/alfamart.png') }}" alt=""
-                                            class="img-fluid">
-                                    </div>
-                                    <div class="col-4 mx-0 mb-1">
-                                        <img src="{{ asset('assets/frontend/img/indomaret.png') }}" alt=""
-                                            class="img-fluid">
-                                    </div>
-                                    <div class="col-4 mx-0 mb-1">
-                                        <img src="{{ asset('assets/frontend/img/shopepay.png') }}" alt=""
-                                            class="img-fluid">
+                                    <div class="col-12 mx-0 mb-1">
+                                        <div class="d-flex justify-content-between">
+                                            <img src="{{ asset('assets/frontend/img/bni.png') }}" alt=""
+                                                class="img-fluid">
+                                            <img src="{{ asset('assets/frontend/img/bca.png') }}" alt=""
+                                                class="img-fluid">
+                                            <img src="{{ asset('assets/frontend/img/mandiri.png') }}" alt=""
+                                                class="img-fluid">
+                                            <img src="{{ asset('assets/frontend/img/alfamart.png') }}" alt=""
+                                                class="img-fluid">
+                                            <img src="{{ asset('assets/frontend/img/indomaret.png') }}" alt=""
+                                                class="img-fluid">
+                                            <img src="{{ asset('assets/frontend/img/shopepay.png') }}" alt=""
+                                                class="img-fluid">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
